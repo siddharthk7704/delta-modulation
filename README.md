@@ -7,6 +7,8 @@ After this, it will plot the original & modulated version of the message signal 
 
 It also saves the modulated signal in .wav format.
 
+You can choose the other python file if you want to perform modulation on an already existing .wav file. 
+
 Python libraries required for this:
 1. pydub (For audio processing and manipulation)
 2. numpy (For numerical computing in Python)
