@@ -34,7 +34,7 @@ def delta_modulate(signal, step_size):
 # Function to save the signal as WAV
 def save_as_wav(signal, file_path, sample_rate, original_max_amplitude):
     # Denormalize signal to original amplitude range
-    denormalized_signal = 1.5 * signal * original_max_amplitude
+    denormalized_signal = signal * original_max_amplitude
     # Convert to 16-bit PCM format
     signal_int16 = np.int16(denormalized_signal)
     # Write WAV file
