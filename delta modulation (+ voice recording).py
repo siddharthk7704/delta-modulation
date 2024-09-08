@@ -68,6 +68,13 @@ step_size = float(input("Enter the step size for the delta modulation: "))  # St
 # Perform delta modulation
 encoded_signal, delta_signal = delta_modulate(original_signal, step_size)
 
+# Print the binary sequence (encoded_signal) and save it in a text file
+print("\nBinary Sequence Output (first 1000 values):")
+print(''.join(map(str, encoded_signal[:1000])))  # Print first 1000 bits as a string
+
+with open("binary_output.txt", "w") as f:
+    f.write(''.join(map(str, encoded_signal)))
+
 # Calculate the quantization error (original signal - reconstructed signal)
 quantization_error = original_signal[:len(delta_signal)] - delta_signal
 
