@@ -80,7 +80,7 @@ quantization_error = original_signal[:len(delta_signal)] - delta_signal
 
 # --- SNR Calculation ---
 # Signal power (mean squared value of original signal)
-signal_power = np.mean(np.square(pcm_signal[:len(delta_signal)]))
+signal_power = np.mean(np.square(original_signal[:len(delta_signal)]))
 
 # Noise power (mean squared value of the quantization error)
 noise_power = np.mean(np.square(quantization_error))
