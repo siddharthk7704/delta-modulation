@@ -34,7 +34,7 @@ def delta_modulate(signal, step_size):
 # Function to save the signal as WAV
 def save_as_wav(signal, file_path, sample_rate, original_max_amplitude):
     # Denormalize signal to original amplitude range
-    denormalized_signal = 1.67 * signal * original_max_amplitude
+    denormalized_signal = 1.5 * signal * original_max_amplitude
     # Convert to 16-bit PCM format
     signal_int16 = np.int16(denormalized_signal)
     # Write WAV file
@@ -68,6 +68,13 @@ step_size = float(input("Enter the step size for the delta modulation: "))  # St
 
 # Perform delta modulation
 encoded_signal, delta_signal = delta_modulate(pcm_signal, step_size)
+
+# Print the binary sequence (encoded_signal) and save it in a text file
+print("\nBinary Sequence Output (first 1000 values):")
+print(''.join(map(str, encoded_signal[:1000])))  # Print first 1000 bits as a string
+
+with open("binary_output.txt", "w") as f:
+    f.write(''.join(map(str, encoded_signal)))
 
 # Calculate the quantization error (original signal - reconstructed signal)
 quantization_error = pcm_signal[:len(delta_signal)] - delta_signal
