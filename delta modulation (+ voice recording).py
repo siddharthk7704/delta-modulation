@@ -78,6 +78,21 @@ with open("binary_output.txt", "w") as f:
 # Calculate the quantization error (original signal - reconstructed signal)
 quantization_error = original_signal[:len(delta_signal)] - delta_signal
 
+# --- SNR Calculation ---
+# Signal power (mean squared value of original signal)
+signal_power = np.mean(np.square(pcm_signal[:len(delta_signal)]))
+
+# Noise power (mean squared value of the quantization error)
+noise_power = np.mean(np.square(quantization_error))
+
+# SNR in dB
+snr = 10 * np.log10(signal_power / noise_power)
+print(f"SNR: {snr:.2f} dB")
+# ------------------------
+
+# Save the delta modulated signal as WAV
+save_file_dialog(delta_signal, sample_rate, "Save Delta Modulated Audio File")
+
 # Plot the original signal, delta modulated signal, and quantization error signal
 plt.figure(figsize=(12, 12))
 
@@ -102,6 +117,3 @@ plt.grid(True)
 
 plt.tight_layout()
 plt.show()
-
-# Save the delta modulated signal as WAV
-save_file_dialog(delta_signal, sample_rate, "Save Delta Modulated Audio File")
