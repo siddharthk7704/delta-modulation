@@ -11,10 +11,9 @@ def load_binary_sequence(file_path):
         binary_sequence = file.read().strip()
     return np.array([int(bit) for bit in binary_sequence], dtype=int)
 
-# Reconstruct delta-modulated signal using interpolation
 def reconstruct_signal(binary_sequence, step_size, sample_rate):
-    # Create a time axis for the delta-modulated steps
-    t = np.arange(len(binary_sequence))
+    # Create a time axis for the delta-modulated steps, assuming each step represents one sample at the original rate
+    t = np.arange(len(binary_sequence)) / sample_rate
     
     # Create the delta-modulated signal (discrete steps)
     delta_signal = np.zeros(len(binary_sequence))
@@ -26,8 +25,9 @@ def reconstruct_signal(binary_sequence, step_size, sample_rate):
     reconstructed_signal = np.cumsum(delta_signal)
     
     # Interpolation to smooth the signal
-    # Create a time axis for the continuous signal
-    t_interp = np.linspace(0, len(binary_sequence)-1, num=len(binary_sequence)*10)
+    # Create a time axis for the continuous signal matching the original duration
+    t_interp = np.linspace(0, t[-1], num=len(binary_sequence))
+    
     # Interpolate the reconstructed signal
     interp_func = interp1d(t, reconstructed_signal, kind='linear', fill_value="extrapolate")
     smoothed_signal = interp_func(t_interp)
