@@ -19,4 +19,4 @@ Python libraries required for this:
 4. scipy (For scientific computing and technical computing)
 5. sounddevice (For recording and playing audio)
 
-Made by Siddharth Kumar
+Made by Siddharth Kumar with the help of ChatGPT
