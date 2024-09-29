@@ -13,10 +13,10 @@ And if you want to reconstruct the original message signal back from the encoded
 Note: Make sure to use the same step size for demoudulation & always type 44100 for sample rate for best results. It will generate a reconstructed .wav file.
 
 Python libraries required for this:
-1. pydub (For audio processing and manipulation)
+1. tkinter: Provides graphical user interface (GUI) features for opening file dialogs.
 2. numpy (For numerical computing in Python)
 3. matplotlib (For plotting the signals)
 4. scipy (For scientific computing and technical computing)
 5. sounddevice (For recording and playing audio)
 
-Made by Siddharth Kumar with the help of ChatGPT
+Made by Siddharth Kumar with the help of AI
