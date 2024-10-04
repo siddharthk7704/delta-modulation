@@ -18,5 +18,3 @@ Python libraries required for this:
 3. matplotlib (For plotting the signals)
 4. scipy (For scientific computing and technical computing)
 5. sounddevice (For recording and playing audio)
-
-Made by Siddharth Kumar with the help of AI
