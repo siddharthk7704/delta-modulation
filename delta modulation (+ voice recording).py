@@ -30,8 +30,10 @@ def delta_modulate(signal, step_size):
 
 # Function to save the signal as WAV
 def save_as_wav(signal, file_path, sample_rate):
-    # Scale signal to 16-bit PCM format
-    signal_int16 = np.int16(signal * 32767)
+    # Normalize and scale signal to 16-bit PCM format
+    max_amplitude = np.max(np.abs(signal))
+    normalized_signal = signal / max_amplitude  # Normalize to -1 to 1 range
+    signal_int16 = np.int16(normalized_signal * 32767)
     write(file_path, sample_rate, signal_int16)
 
 # Function to open file dialog and save the WAV
@@ -58,14 +60,18 @@ sample_rate = 44100  # Sampling rate
 # Capture audio from the microphone
 original_signal = record_audio(duration, sample_rate)
 
+# Normalize the original signal to have a maximum amplitude of 1
+max_amplitude = np.max(np.abs(original_signal))
+normalized_signal = original_signal / max_amplitude
+
 # Save the original recorded audio
-save_file_dialog(original_signal, sample_rate, "Save Original Audio File")
+save_file_dialog(normalized_signal, sample_rate, "Save Original Audio File")
 
 # Parameters for delta modulation
 step_size = float(input("Enter the step size for the delta modulation: "))  # Step size for delta modulation
 
 # Perform delta modulation
-encoded_signal, delta_signal = delta_modulate(original_signal, step_size)
+encoded_signal, delta_signal = delta_modulate(normalized_signal, step_size)
 
 # Print the binary sequence (encoded_signal) and save it in a text file
 print("\nBinary Sequence Output (first 1000 values):")
@@ -75,11 +81,11 @@ with open("binary_output.txt", "w") as f:
     f.write(''.join(map(str, encoded_signal)))
 
 # Calculate the quantization error (original signal - reconstructed signal)
-quantization_error = original_signal[:len(delta_signal)] - delta_signal
+quantization_error = normalized_signal[:len(delta_signal)] - delta_signal
 
 # --- SNR Calculation ---
 # Signal power (mean squared value of original signal)
-signal_power = np.mean(np.square(original_signal[:len(delta_signal)]))
+signal_power = np.mean(np.square(normalized_signal[:len(delta_signal)]))
 
 # Noise power (mean squared value of the quantization error)
 noise_power = np.mean(np.square(quantization_error))
@@ -97,7 +103,7 @@ plt.figure(figsize=(12, 12))
 
 plt.subplot(4, 1, 1)
 plt.title('Original Signal')
-plt.plot(original_signal[:100000])  # Plot a portion of the signal for clarity
+plt.plot(normalized_signal[:100000])  # Plot a portion of the signal for clarity
 plt.xlabel('Sample Index')
 plt.ylabel('Amplitude')
 
